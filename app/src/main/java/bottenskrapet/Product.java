@@ -5,7 +5,8 @@ public record Product(int number,
                       String thinName,
                       double volume,
                       double price,
-                      double percentage) implements Comparable<Product> {
+                      double percentage,
+                      String imageUrl) implements Comparable<Product> {
 
     public double calculateApk() {
         return (volume * percentage) / price;

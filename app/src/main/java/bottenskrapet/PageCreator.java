@@ -35,6 +35,7 @@ public class PageCreator {
         productDiv.append("<div class=\"price\">" + product.price() + "kr</div>");
         productDiv.append("<div class=\"info\">" + product.volume() + "ml at " + product.percentage() + "%</div>");
         productDiv.append("<div class=\"apk\">APK: " + String.format("%.2f", product.calculateApk()) + "</div>");
+        productDiv.append("<img src=" + product.imageUrl() + ">");
 
         return productDiv;
     }

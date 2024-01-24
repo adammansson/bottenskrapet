@@ -4,6 +4,7 @@ import org.json.*;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -38,17 +39,24 @@ public class SearchScraper extends Thread {
     private static Product productFromJson(JSONObject obj) {
         int number = obj.getInt("productNumber");
         String boldName = obj.getString("productNameBold");
-        String thinName;
-        if (obj.isNull("productNameThin")) {
-           thinName = "";
-        } else {
+
+        String thinName = "";
+        if (!obj.isNull("productNameThin")) {
             thinName = obj.getString("productNameThin");
         }
+
         double volume = obj.getDouble("volume");
         double price = obj.getDouble("price");
         double percentage = obj.getDouble("alcoholPercentage");
+        JSONArray images = obj.getJSONArray("images");
 
-        return new Product(number, boldName, thinName, volume, price, percentage);
+        String firstImageUrl = "";
+        if (!images.isEmpty()) {
+            JSONObject firstImage = images.getJSONObject(0);
+            firstImageUrl = firstImage.getString("imageUrl");
+        }
+
+        return new Product(number, boldName, thinName, volume, price, percentage, firstImageUrl);
     }
 
     private static List<Product> getProductsFromResponse(String response) {
