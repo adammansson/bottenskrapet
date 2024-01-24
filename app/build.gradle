@@ -26,8 +26,6 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.17.2'
 
     implementation 'org.json:json:20231013'
-
-    implementation 'org.apache.httpcomponents:httpclient:4.5.14'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
