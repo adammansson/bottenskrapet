@@ -37,12 +37,18 @@ public class SearchScraper extends Thread {
 
     private static Product productFromJson(JSONObject obj) {
         int number = obj.getInt("productNumber");
-        String name = obj.getString("productNameBold");
+        String boldName = obj.getString("productNameBold");
+        String thinName;
+        if (obj.isNull("productNameThin")) {
+           thinName = "";
+        } else {
+            thinName = obj.getString("productNameThin");
+        }
         double volume = obj.getDouble("volume");
         double price = obj.getDouble("price");
         double percentage = obj.getDouble("alcoholPercentage");
 
-        return new Product(number, name, volume, price, percentage);
+        return new Product(number, boldName, thinName, volume, price, percentage);
     }
 
     private static List<Product> getProductsFromResponse(String response) {

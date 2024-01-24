@@ -3,11 +3,10 @@ package bottenskrapet;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -18,32 +17,44 @@ public class PageCreator {
         this.products = products;
     }
 
-    private Element productToHtml(Product product) {
-       Element productDiv = new Element("div");
-
-       productDiv.append("<h2>" + product.name() + "</h2>");
-       productDiv.append("<h2>" + product.percentage() + "</h2>");
-
-       return productDiv;
-    }
-
-    public void create() {
+    private Document readDocumentFromFile() {
         try {
             File input = new File("docs/template.html");
-            Document doc = Jsoup.parse(input);
-            Element body = doc.select("body").first();
-            System.out.println(doc);
-            System.out.println(body);
+            return Jsoup.parse(input);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-            for (var product : this.products) {
-                body.appendChild(productToHtml(product));
-            }
+    private Element productToHtml(Product product) {
+        Element productDiv = new Element("div");
+        productDiv.addClass("product");
 
+        productDiv.append("<div class=\"boldName\">" + product.boldName() + "</div>");
+        productDiv.append("<div class=\"thinName\">" + product.thinName() + "</div>");
+        productDiv.append("<div class=\"price\">" + product.price() + "kr</div>");
+        productDiv.append("<div class=\"info\">" + product.volume() + "ml at " + product.percentage() + "%</div>");
+        productDiv.append("<div class=\"apk\">APK: " + String.format("%.2f", product.calculateApk()) + "</div>");
+
+        return productDiv;
+    }
+
+    private void writeDocumentToFile(Document doc) {
+        try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("docs/index.html"));
             writer.write(doc.html());
             writer.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void create() {
+        Document doc = readDocumentFromFile();
+        Element mainContent = doc.select("#main-content").first();
+        for (var product : this.products) {
+            mainContent.appendChild(productToHtml(product));
+        }
+        writeDocumentToFile(doc);
     }
 }

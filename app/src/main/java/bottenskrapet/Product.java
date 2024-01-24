@@ -1,6 +1,12 @@
 package bottenskrapet;
 
-public record Product(int number, String name, double volume, double price, double percentage) implements Comparable<Product> {
+public record Product(int number,
+                      String boldName,
+                      String thinName,
+                      double volume,
+                      double price,
+                      double percentage) implements Comparable<Product> {
+
     public double calculateApk() {
         return (volume * percentage) / price;
     }

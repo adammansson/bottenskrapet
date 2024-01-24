@@ -19,9 +19,15 @@ public class App {
     void run() {
         ScraperMonitor monitor = new ScraperMonitor();
 
+        /*
         SearchUri storeSearchUri = new SearchUri(Map.of(
                 "isInStoreAssortmentSearch", "true",
                 "storeId", "1255"
+        ));
+         */
+        SearchUri storeSearchUri = new SearchUri(Map.of(
+                "CategoryLevel1", "Sprit",
+                "CategoryLevel2", "Punsch"
         ));
 
         var scraperThread = new SearchScraper(monitor, storeSearchUri);
