@@ -35,7 +35,8 @@ public class App {
 
         List<Product> products = new ArrayList<>(monitor.getProducts());
         products.sort(Comparator.naturalOrder());
-        System.out.println(products.getFirst());
+
+        new PageCreator(products.stream().limit(50).toList()).create();
     }
 
     public static void main(String[] args) {
