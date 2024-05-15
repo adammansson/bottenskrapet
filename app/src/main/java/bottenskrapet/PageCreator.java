@@ -30,12 +30,12 @@ public class PageCreator {
         Element productDiv = new Element("div");
         productDiv.addClass("product");
 
-        productDiv.append("<div class=\"boldName\">" + product.boldName() + "</div>");
-        productDiv.append("<div class=\"thinName\">" + product.thinName() + "</div>");
+        productDiv.append("<div class=\"boldName\">" + product.productNameBold() + "</div>");
+        productDiv.append("<div class=\"thinName\">" + product.productNameThin() + "</div>");
         productDiv.append("<div class=\"price\">" + product.price() + "kr</div>");
-        productDiv.append("<div class=\"info\">" + product.volume() + "ml at " + product.percentage() + "%</div>");
+        productDiv.append("<div class=\"info\">" + product.volume() + "ml at " + product.alcoholPercentage() + "%</div>");
         productDiv.append("<div class=\"apk\">APK: " + String.format("%.2f", product.calculateApk()) + "</div>");
-        productDiv.append("<img src=" + product.imageUrl() + ">");
+        productDiv.append("<img src=" + product.imageUrl() +".png>");
 
         return productDiv;
     }
